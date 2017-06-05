@@ -1,0 +1,30 @@
+{
+    "manifest_version": 2,
+
+    "name": "Google SERP counter",
+    "version": "1.0.0",
+    "description": "Adds a counter next to search results to show it's ranking.",
+    "author": "https://martijnoud.com/google-serp-counter/",
+
+    "content_scripts": [{
+        "css": ["styles.css"],
+        "js": ["content.js"],
+        "matches": [
+            "*://*/*"
+        ],
+        "include_globs": [
+            "*q=*",
+            "*://*.google.*/webhp?*",
+            "*://*.google.*/?gws_rd*",
+            "*://*.google.*/?gfe_rd*"
+        ],
+        "run_at": "document_end"
+    }],
+
+    "icons": {
+        "16": "icons/icon16.png",
+        "48": "icons/icon48.png",
+        "128": "icons/icon128.png"
+    }
+
+}

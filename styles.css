@@ -1,0 +1,22 @@
+.g {
+    position: relative
+}
+
+.js-counter {
+    position: absolute;
+    left: 0;
+    top: 0;
+    margin-left: -55px;
+    color: #ccc;
+    font-size: 175%;
+    animation: fadeIn .3s;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
