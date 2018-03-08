@@ -46,7 +46,7 @@ function main() {
                 counter.innerHTML = '#' + (i + 1);
             }
 
-            results[i].parentNode.appendChild(counter);
+            results[i].parentNode.prepend(counter);
         }
 
     }

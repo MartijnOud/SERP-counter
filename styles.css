@@ -1,14 +1,11 @@
-.g {
-    position: relative
-}
-
 .js-counter {
-    position: absolute;
-    left: 0;
-    top: 0;
-    margin-left: -55px;
+    position: relative;
+    top: 12px;
+    left: -60px;
+    line-height: 0;
+    float: left;
     color: #ccc;
-    font-size: 175%;
+    font-size: 171%;
     animation: fadeIn .3s;
 }
 
