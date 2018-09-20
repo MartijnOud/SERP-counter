@@ -2,7 +2,8 @@
     "manifest_version": 2,
 
     "name": "Google SERP counter",
-    "version": "1.2.0",
+    "version": "1.2.1",
+    "default_locale": "en",
     "description": "Adds a counter next to search results to show it's ranking.",
     "author": "https://martijnoud.com/google-serp-counter/",
 
@@ -21,10 +22,12 @@
         "run_at": "document_end"
     }],
 
-    "icons": {
-        "16": "icons/icon16.png",
-        "48": "icons/icon48.png",
-        "128": "icons/icon128.png"
-    }
+    "browser_action": {
+        "default_icon": {
+            "16": "icons/icon16.png",
+            "48": "icons/icon48.png",
+            "128": "icons/icon128.png"
+        }
+    },
 
 }
