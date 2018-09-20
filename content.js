@@ -7,48 +7,62 @@ function main() {
         // Regex to get current page from #resultStats
         // Get integers from two string formats:
         //
-        //     Ongeveer 453.000 resultaten (0,48 seconden)
-        //     (Only two matches = first page)
+        //     About 22.600.000 results (0,43 seconds) 
+        //     (Two matches == first page)
         //
-        //     Pagina 2 van ongeveer 453.000 resultaten<nobr> (0,43 seconden)&nbsp;</nobr>
-        //     (First match is the current page)
+        //     Page 2 of about 22.600.000 results (0,50 seconds)
+        //     (First match is the _current_ page)
+        //
         //
         var resultStats = resultStats.innerHTML;
         var regExMatch = resultStats.match(/[0-9]+(\.|,)?[0-9]?(\.|,)?[0-9]?(\.|,)?[0-9]?(\.|,)?[0-9]?(\.|,)?[0-9]?(\.|,)?[0-9]?(\.|,)?[0-9]?(\.|,)?[0-9]?(\.|,)?[0-9]?/g);
 
-        // > 2 matches = first match is page number
+        // 2+ matches = first match is page number
+        var currentPage = 1;
         if (typeof regExMatch[2] !== 'undefined') {
             var currentPage = parseInt(regExMatch[0]);
-        } else {
-            var currentPage = 1;
         }
 
-        // get all regular/organic search results
         var results = document.querySelectorAll('.g .rc');
-
-        // @todo: this doesnt work for last page
         var resultsPerPage = results.length;
-        if (resultsPerPage < 10) {
-            var resultsPerPage = 10;
+
+        // Set featured snippet to #0        
+        if (results[0].getElementsByClassName('st').length == 0) {
+            var countDisplay = 0;
+        } else {
+            var countDisplay = 1;
         }
 
-        // Now add our counter
-        for (var i = 0, g = results.length; i < g ; i++) {
+        // Reset localstorage on page 1 for new searches
+        if (currentPage == 1) {
+            localStorage.removeItem('countLastPage');
+            localStorage.removeItem('lastPage');
+        }
+
+        // countActual = index. Starts at 0, resets every page
+        // countDisplay = Human friendly, stored in localStorage
+        for (var countActual = 0; countActual < results.length; countActual++, countDisplay++) {
+
             counter = document.createElement('div');
             counter.className = 'js-counter';
 
-            // index zero
-            // multiple pages (currentPage)
-            if (currentPage > 1) {
-                counter.innerHTML = '#' + (i + (currentPage * resultsPerPage) - (resultsPerPage - 1));
+            if (currentPage == 1) {
+                var count = countDisplay;
+                counter.innerHTML = '#' + count;
+            } else if (parseInt(localStorage.getItem('countLastPage')) !== null && (parseInt(localStorage.getItem('lastPage')) + 1) == currentPage) {
+                var count = (countDisplay + parseInt(localStorage.getItem('countLastPage')));
+                counter.innerHTML = '#' + count;
             } else {
-                // index zero + 1
-                counter.innerHTML = '#' + (i + 1);
+                // Fallback for when localStorage is not set (no chronological navigation)
+                var count = (countActual + (currentPage * resultsPerPage)) - (resultsPerPage-1);
+                counter.innerHTML = '#' + count;
             }
 
-            results[i].parentNode.prepend(counter);
+            results[countActual].parentNode.prepend(counter);
         }
 
+        localStorage.setItem('lastPage', currentPage);
+        localStorage.setItem('countLastPage', count);
     }
 
     return true;
@@ -56,7 +70,7 @@ function main() {
 }
 
 // Listen to hash change
-// window.onhashchange and similair functions dont work with google instant search
+// window.onhashchange and similar functions don't work with instant search
 oldHash = location.hash;
 var hashchange = setInterval(function() {
 
@@ -65,15 +79,14 @@ var hashchange = setInterval(function() {
     if (currentHash != oldHash) {
 
         // hash has changed, run function again
-        setTimeout(main, 1000);
+        setTimeout(main, 750);
 
         // set curenthash again
         // and keep listening
         oldHash = currentHash;
     }
 
-
-}, 1000);
+}, 750);
 
 // run on page load
-setTimeout(main, 1000);
+setTimeout(main, 750);

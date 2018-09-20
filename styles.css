@@ -6,7 +6,7 @@
     float: left;
     color: #ccc;
     font-size: 171%;
-    animation: fadeIn .3s;
+    animation: linear fadeIn .3s;
 }
 
 @keyframes fadeIn {
