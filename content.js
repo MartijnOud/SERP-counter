@@ -43,6 +43,12 @@ function main() {
         // countDisplay = Human friendly, stored in localStorage
         for (var countActual = 0; countActual < results.length; countActual++, countDisplay++) {
 
+            // Skip PAA box but make sure it's not a featured snippet
+            if (countDisplay !== 0 && results[countActual].getElementsByClassName('st').length == 0) {
+                countDisplay--;
+                continue;
+            }
+
             counter = document.createElement('div');
             counter.className = 'js-counter';
 
