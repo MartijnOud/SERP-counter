@@ -2,8 +2,8 @@
     "manifest_version": 2,
 
     "name": "Google SERP counter",
-    "version": "1.2.2",
-    "description": "Adds a counter next to search results to show it's ranking.",
+    "version": "1.2.3",
+    "description": "Adds a counter next to search results to show its ranking.",
     "author": "https://martijnoud.com/google-serp-counter/",
 
     "content_scripts": [{

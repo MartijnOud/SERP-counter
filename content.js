@@ -4,19 +4,27 @@ function main() {
 
     if (resultStats !== null) {
 
+        
+        var resultStats = resultStats.innerHTML;
+        
+        // Regex to match &nbsp; (or single space) surrounded by digits
+        // Replaces thousand seperator space with a .
+        var resultStats = resultStats.replace(/(?<=[0-9]{1,3})(&nbsp;|\s{1})(?=[0-9]{1,3})/g, '.');
+        
         // Regex to get current page from #resultStats
-        // Get integers from two string formats:
+        // Get integers from two string for
+        //     About 22.600.000 results (0,43 seconds) mats:
         //
-        //     About 22.600.000 results (0,43 seconds) 
         //     (Two matches == first page)
         //
         //     Page 2 of about 22.600.000 results (0,50 seconds)
         //     (First match is the _current_ page)
+        //     
+        //     Works for all known locales
         //
         //
-        var resultStats = resultStats.innerHTML;
         var regExMatch = resultStats.match(/[0-9]+(\.|,)?[0-9]?(\.|,)?[0-9]?(\.|,)?[0-9]?(\.|,)?[0-9]?(\.|,)?[0-9]?(\.|,)?[0-9]?(\.|,)?[0-9]?(\.|,)?[0-9]?(\.|,)?[0-9]?/g);
-
+        
         // 2+ matches = first match is page number
         var currentPage = 1;
         if (typeof regExMatch[2] !== 'undefined') {
