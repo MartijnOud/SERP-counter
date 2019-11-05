@@ -35,7 +35,7 @@ function main() {
         var resultsPerPage = results.length;
 
         // Set featured snippet to #0
-        if (results[0].getElementsByClassName('st').length == 0) {
+        if (results[0].parentNode.parentNode.parentNode.querySelector('.mod')) {
             var countDisplay = 0;
         } else {
             var countDisplay = 1;
