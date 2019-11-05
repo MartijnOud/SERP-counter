@@ -2,7 +2,7 @@
     "manifest_version": 2,
 
     "name": "Google SERP counter",
-    "version": "1.2.4",
+    "version": "1.2.5",
     "description": "Adds a counter next to search results to show its ranking.",
     "author": "https://martijnoud.com/google-serp-counter/",
 
