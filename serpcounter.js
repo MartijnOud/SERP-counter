@@ -35,8 +35,14 @@ function main() {
         var resultsPerPage = results.length;
 
         // Set featured snippet to #0
-        if (results[0].parentNode.parentNode.parentNode.querySelector('.mod')) {
-            var countDisplay = 0;
+        // Make sure its actually visible
+        var featuredBox = results[0].parentNode.parentNode.parentNode.querySelector('.mod');
+        if (featuredBox) {
+            if (window.getComputedStyle(featuredBox).visibility == "visible") {
+                var countDisplay = 0;
+            } else {
+                var countDisplay = 1;
+            }
         } else {
             var countDisplay = 1;
         }
@@ -52,7 +58,13 @@ function main() {
         for (var countActual = 0; countActual < results.length; countActual++, countDisplay++) {
 
             // Skip if URL is invisible (PAA box)
-            var url = window.getComputedStyle(results[countActual].querySelector('cite'));
+            var urls = results[countActual].querySelectorAll('cite');
+            if (urls[1]) {
+                var url = window.getComputedStyle(urls[1]);
+            } else {
+                var url = window.getComputedStyle(urls[0]);
+            }
+
             if (url.visibility == "hidden") {
                 countDisplay--;
                 continue;

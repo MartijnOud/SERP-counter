@@ -2,18 +2,19 @@
     "manifest_version": 2,
 
     "name": "Google SERP counter",
-    "version": "1.2.5",
-    "description": "Adds a counter next to search results to show its ranking.",
+    "version": "1.2.6",
+    "description": "Adds a counter next to search results in Google to show its ranking.",
     "author": "https://martijnoud.com/google-serp-counter/",
 
     "content_scripts": [{
-        "css": ["styles.css"],
-        "js": ["content.js"],
+        "css": ["serpcounter.css"],
+        "js": ["serpcounter.js"],
         "matches": [
             "*://*/*"
         ],
         "include_globs": [
             "*q=*",
+            "*://*.google.*",
             "*://*.google.*/webhp?*",
             "*://*.google.*/?gws_rd*",
             "*://*.google.*/?gfe_rd*"
