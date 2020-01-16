@@ -1,10 +1,11 @@
 function main() {
 
+    // Get SERPs
+    var results = document.querySelectorAll('.g .rc');
+
+    // Calculate results per page
     var resultStats = document.getElementById('resultStats');
-
     if (resultStats !== null) {
-
-
         var resultStats = resultStats.innerHTML;
 
         // Regex to match &nbsp; (or single space) surrounded by digits
@@ -20,7 +21,7 @@ function main() {
         //     Page 2 of about 22.600.000 results (0,50 seconds)
         //     (First match is the _current_ page)
         //
-        //     Works for all known locales
+        //     Works for most known locales
         //
         //
         var regExMatch = resultStats.match(/[0-9]+(\.|,)?[0-9]?(\.|,)?[0-9]?(\.|,)?[0-9]?(\.|,)?[0-9]?(\.|,)?[0-9]?(\.|,)?[0-9]?(\.|,)?[0-9]?(\.|,)?[0-9]?(\.|,)?[0-9]?/g);
@@ -31,66 +32,65 @@ function main() {
             var currentPage = parseInt(regExMatch[0]);
         }
 
-        var results = document.querySelectorAll('.g .rc');
         var resultsPerPage = results.length;
+    } else {
+        // defaults for queries without resultsPerPage
+        var currentPage = 1;
+        var resultsPerPage = 10;
+    }
 
-        // Set featured snippet to #0
-        // Make sure its actually visible
-        var featuredBox = results[0].parentNode.parentNode.parentNode.querySelector('.mod');
-        if (featuredBox) {
-            if (window.getComputedStyle(featuredBox).visibility == "visible") {
-                var countDisplay = 0;
-            } else {
-                var countDisplay = 1;
-            }
+    // Set featured snippet to 0
+    // Make sure its actually visible
+    var featuredBox = results[0].parentNode.parentNode.parentNode.querySelector('.mod');
+    if (featuredBox) {
+        if (window.getComputedStyle(featuredBox).visibility == "visible") {
+            var countDisplay = 0;
         } else {
             var countDisplay = 1;
         }
-
-        // Reset localstorage on page 1 for new searches
-        if (currentPage == 1) {
-            localStorage.removeItem('countLastPage');
-            localStorage.removeItem('lastPage');
-        }
-
-        // countActual = index. Starts at 0, resets every page
-        // countDisplay = Human friendly, stored in localStorage
-        for (var countActual = 0; countActual < results.length; countActual++, countDisplay++) {
-
-            // Skip if URL is invisible (PAA box)
-            var urls = results[countActual].querySelectorAll('cite');
-            if (urls[1]) {
-                var url = window.getComputedStyle(urls[1]);
-            } else {
-                var url = window.getComputedStyle(urls[0]);
-            }
-
-            if (url.visibility == "hidden") {
-                countDisplay--;
-                continue;
-            }
-
-            counter = document.createElement('div');
-            counter.className = 'js-counter';
-
-            if (currentPage == 1) {
-                var count = countDisplay;
-                counter.innerHTML = '#' + count;
-            } else if (parseInt(localStorage.getItem('countLastPage')) !== null && (parseInt(localStorage.getItem('lastPage')) + 1) == currentPage) {
-                var count = (countDisplay + parseInt(localStorage.getItem('countLastPage')));
-                counter.innerHTML = '#' + count;
-            } else {
-                // Fallback for when localStorage is not set (no chronological navigation)
-                var count = (countActual + (currentPage * resultsPerPage)) - (resultsPerPage-1);
-                counter.innerHTML = '#' + count;
-            }
-
-            results[countActual].parentNode.prepend(counter);
-        }
-
-        localStorage.setItem('lastPage', currentPage);
-        localStorage.setItem('countLastPage', count);
+    } else {
+        var countDisplay = 1;
     }
+
+    // Reset localstorage on page 1 for new searches
+    if (currentPage == 1) {
+        localStorage.removeItem('countLastPage');
+        localStorage.removeItem('lastPage');
+    }
+
+    // countActual = index. Starts at 0, resets every page
+    // countDisplay = Human friendly, stored in localStorage
+    for (var countActual = 0; countActual < results.length; countActual++, countDisplay++) {
+
+        // Skip if URL is invisible (PAA box)
+        var urls = results[countActual].querySelectorAll('cite');
+        var url = window.getComputedStyle(urls[0]);
+        if (url.visibility == "hidden") {
+            countDisplay--;
+            continue;
+        }
+
+        
+        if (currentPage == 1) {
+            var count = countDisplay;
+        } else if (parseInt(localStorage.getItem('countLastPage')) !== null && (parseInt(localStorage.getItem('lastPage')) + 1) == currentPage) {
+            var count = (countDisplay + parseInt(localStorage.getItem('countLastPage')));
+        } else {
+            // Fallback for when localStorage is not set (no chronological navigation)
+            var count = (countActual + (currentPage * resultsPerPage)) - (resultsPerPage-1);
+        }
+
+        counter = document.createElement('div');
+        counter.className = 'js-counter';
+        counter.innerHTML = '#' + count;
+
+
+        results[countActual].parentNode.prepend(counter);
+    }
+
+    localStorage.setItem('lastPage', currentPage);
+    localStorage.setItem('countLastPage', count);
+
 
     return true;
 
