@@ -39,19 +39,6 @@ function main() {
         var resultsPerPage = 10;
     }
 
-    // Set featured snippet to 0
-    // Make sure its actually visible
-    var featuredBox = results[0].parentNode.parentNode.parentNode.querySelector('.mod');
-    if (featuredBox) {
-        if (window.getComputedStyle(featuredBox).visibility == "visible") {
-            var countDisplay = 0;
-        } else {
-            var countDisplay = 1;
-        }
-    } else {
-        var countDisplay = 1;
-    }
-
     // Reset localstorage on page 1 for new searches
     if (currentPage == 1) {
         localStorage.removeItem('countLastPage');
@@ -60,6 +47,7 @@ function main() {
 
     // countActual = index. Starts at 0, resets every page
     // countDisplay = Human friendly, stored in localStorage
+    var countDisplay = 1;
     for (var countActual = 0; countActual < results.length; countActual++, countDisplay++) {
 
         // Skip if URL is invisible (PAA box)
