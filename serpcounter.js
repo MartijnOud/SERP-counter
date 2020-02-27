@@ -4,7 +4,7 @@ function main() {
     var results = document.querySelectorAll('.g .rc');
 
     // Calculate results per page
-    var resultStats = document.getElementById('resultStats');
+    var resultStats = document.getElementById('result-stats');
     if (resultStats !== null) {
         var resultStats = resultStats.innerHTML;
 

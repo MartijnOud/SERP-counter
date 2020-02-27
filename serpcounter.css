@@ -9,6 +9,11 @@
     animation: linear fadeIn .3s;
 }
 
+/* Featured snippet box */
+.c2xzTb {
+    overflow: visible !important;
+}
+
 @keyframes fadeIn {
     from {
         opacity: 0;
