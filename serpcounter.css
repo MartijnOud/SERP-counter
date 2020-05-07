@@ -7,6 +7,7 @@
     color: #ccc;
     font-size: 19px;
     animation: linear fadeIn .3s;
+    user-select: none;
 }
 
 /* Featured snippet box */
