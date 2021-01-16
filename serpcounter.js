@@ -70,7 +70,7 @@ function main() {
 
         counter = document.createElement('div');
         counter.className = 'js-counter';
-        counter.innerHTML = '#' + count;
+        counter.textContent = '#' + count;
 
 
         results[countActual].parentNode.prepend(counter);
