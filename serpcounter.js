@@ -1,10 +1,10 @@
 function main() {
 
     // Get SERPs
-    var results = document.querySelectorAll('.g .rc');
+    var results = document.querySelectorAll('#search .yuRUbf');
 
     // Calculate results per page
-    var resultStats = document.getElementById('result-stats');
+    var resultStats = document.querySelector('#result-stats');
     if (resultStats !== null) {
         var resultStats = resultStats.innerHTML;
 
@@ -58,7 +58,7 @@ function main() {
             continue;
         }
 
-        
+
         if (currentPage == 1) {
             var count = countDisplay;
         } else if (parseInt(localStorage.getItem('countLastPage')) !== null && (parseInt(localStorage.getItem('lastPage')) + 1) == currentPage) {
