@@ -1,7 +1,9 @@
 function main() {
 
     // Get SERPs
-    var results = document.querySelectorAll('#search .yuRUbf');
+    var elements = document.querySelectorAll('#search .yuRUbf');
+    // Remove `people also ask`
+    var results = [...elements].filter(element => !element.closest(".Wt5Tfe"));
 
     // Calculate results per page
     var resultStats = document.querySelector('#result-stats');
@@ -24,7 +26,7 @@ function main() {
         //     Works for most known locales
         //
         //
-        var regExMatch = resultStats.match(/[0-9]+(\.|,)?[0-9]?(\.|,)?[0-9]?(\.|,)?[0-9]?(\.|,)?[0-9]?(\.|,)?[0-9]?(\.|,)?[0-9]?(\.|,)?[0-9]?(\.|,)?[0-9]?(\.|,)?[0-9]?/g);
+        var regExMatch = resultStats.match(/[0-9]+(\.|,|’)?[0-9]?(\.|,|’)?[0-9]?(\.|,|’)?[0-9]?(\.|,|’)?[0-9]?(\.|,|’)?[0-9]?(\.|,|’)?[0-9]?(\.|,|’)?[0-9]?(\.|,|’)?[0-9]?(\.|,|’)?[0-9]?/g);
 
         // 2+ matches = first match is page number
         var currentPage = 1;
