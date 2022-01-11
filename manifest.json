@@ -9,9 +9,6 @@
     "content_scripts": [{
         "css": ["serpcounter.css"],
         "js": ["serpcounter.js"],
-        "matches": [
-            "*://*/*"
-        ],
         "include_globs": [
             "*q=*",
             "*://*.google.*",
