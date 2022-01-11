@@ -54,12 +54,13 @@ function main() {
 
         // Skip if URL is invisible (PAA box)
         var urls = results[countActual].querySelectorAll('cite');
-        var url = window.getComputedStyle(urls[0]);
-        if (url.visibility == "hidden") {
-            countDisplay--;
-            continue;
+        if (urls[0]) {
+            var url = window.getComputedStyle(urls[0]);
+            if (url.visibility == "hidden") {
+                countDisplay--;
+                continue;
+            }
         }
-
 
         if (currentPage == 1) {
             var count = countDisplay;
