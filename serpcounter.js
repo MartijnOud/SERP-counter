@@ -1,9 +1,7 @@
 function main() {
 
     // Get SERPs
-    var elements = document.querySelectorAll('#search .yuRUbf');
-    // Remove `people also ask`
-    var results = [...elements].filter(element => !element.closest(".Wt5Tfe"));
+    var results = document.querySelectorAll('#search .yuRUbf');
 
     // Calculate results per page
     var resultStats = document.querySelector('#result-stats');
@@ -52,14 +50,12 @@ function main() {
     var countDisplay = 1;
     for (var countActual = 0; countActual < results.length; countActual++, countDisplay++) {
 
-        // Skip if URL is invisible (PAA box)
-        var urls = results[countActual].querySelectorAll('cite');
-        if (urls[0]) {
-            var url = window.getComputedStyle(urls[0]);
-            if (url.visibility == "hidden") {
-                countDisplay--;
-                continue;
-            }
+        // Skip if URL is invisible (PAA box, other search features)
+        var height = window.getComputedStyle(results[countActual].querySelector('a h3')).height;
+        if (height == "auto") { var height = 0; }
+        if (height < 20) {
+            countDisplay--;
+            continue;
         }
 
         if (currentPage == 1) {
@@ -75,8 +71,7 @@ function main() {
         counter.className = 'js-counter';
         counter.textContent = '#' + count;
 
-
-        results[countActual].parentNode.prepend(counter);
+        results[countActual].closest(".g").prepend(counter);
     }
 
     localStorage.setItem('lastPage', currentPage);
