@@ -1,7 +1,8 @@
 function main() {
 
     // Get SERPs
-    var results = document.querySelectorAll('#search .yuRUbf');
+    var elements = document.querySelectorAll('#search .yuRUbf');
+    var results = [...elements].filter(element => !element.closest(".ULSxyf")); // remove featured snippet box results
 
     // Calculate results per page
     var resultStats = document.querySelector('#result-stats');
@@ -71,7 +72,7 @@ function main() {
         counter.className = 'js-counter';
         counter.textContent = '#' + count;
 
-        results[countActual].closest(".g").prepend(counter);
+        results[countActual].append(counter);
     }
 
     localStorage.setItem('lastPage', currentPage);

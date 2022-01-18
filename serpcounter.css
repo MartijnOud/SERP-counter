@@ -1,5 +1,5 @@
 .js-counter {
-    position: relative;
+    position: absolute;
     top: 14px;
     left: -50px;
     line-height: 0;
@@ -13,6 +13,13 @@
 /* Featured snippet box */
 .c2xzTb {
     overflow: visible !important;
+}
+
+/* Fix indented results not showing numbers */
+.jtfYYd,
+.kWxLod {
+    overflow: inherit !important;
+    contain: inherit!important;
 }
 
 @keyframes fadeIn {
